@@ -1,5 +1,8 @@
 body {
     font-family: "Arial", sans-serif;
+    margin: 0px;
+    background-color: #7A7A7A;
+    color: #525368;
 }
 section {
     text-align: center;
@@ -19,24 +22,46 @@ section {
     font-family: "Permanent Marker", cursive;
     width: 100px;
     height: 100px;
-    box-shadow: 0 0 0 1px #333333;
-    border: 1px solid #333333;
+    box-shadow: 0 0 0 1px #525368;
+    border: 1px solid #525368;
     cursor: pointer;
     line-height: 100px;
     font-size: 60px;
+    border-radius: 20%;
 }
 .cell:hover {
-    background-color: #33333349;
+    background-color: rgba(245, 245, 245, 0.24);
 }
-#player1 {
+.player-one {
     height: 100px;
     width: 100px;
-    border-radius: 50%;
+    border-radius: 20%;
     text-align: center;
 }
-#player2 {
+.player-two {
     height: 100px;
     width: 100px;
-    border-radius: 50%;
+    border-radius: 20%;
     text-align: center;
+}
+header {
+    background-color: #7A7A7A;
+    display: flex;
+    margin: none;
+    align-items: center;
+    flex-direction: column;
+    height: 100px;
+    margin-bottom: 10px;
+}
+h1 {
+    display: flex;
+    margin-bottom: 5px;
+}
+h3 {
+    margin-top: 5px;
+}
+.bottom-board {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

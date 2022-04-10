@@ -4,9 +4,13 @@ const gameStatus = document.querySelector('.game-status');
 //State variables
 let currentPlayer = "X";
 
+let numClicks = 0;
+
 let gameState = ["", "", "", "", "", "", "", "", ""];
 
 let gameActive = false;
+
+let playerName = ""
 
 const winningConditions = [
     [0, 1, 2],
@@ -20,18 +24,31 @@ const winningConditions = [
 ];
 
 //Messages for game display
-const winningMessage = () => `Player ${currentPlayer} is the winner!`;
+const winningMessage = () => `${playerName} is the winner!`;
 const drawMessage = `The game has ended in a draw.`;
-const currentPlayerTurn = () => `It's ${currentPlayer}'s turn.`;
+const currentPlayerTurn = () => `It's ${playerName}'s turn.`;
 
 //Display which players turn it is
 gameStatus.innerHTML = currentPlayerTurn();
 
 //Functions for game
+function loadFunction() {
+    gameStatus.style.display = "none"
+}
+
 function startGame() {
     gameActive = true;
     numClicks = 0;
+    if(gameStatus.style.display === 'none') {
+        gameStatus.style.display = 'block'
+    }
+    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
 }
+
+// function storeNames() {
+//     playerOne = document.querySelector('.player-one').value
+//     playerTwo = document.querySelector('.player-two').value
+// }
 
 function cellClick(clickedCellEvent) {
     //Assign cell index and clicked cell to variables for easier access
@@ -41,9 +58,11 @@ function cellClick(clickedCellEvent) {
     if (gameState[clickedCellIndex] !== "" || gameActive == false) {
         return;
     }
+    numClicks += 1;
     //Continue game
     cellRender(clickedCell, clickedCellIndex);
     resultValidation()
+    console.log(numClicks, playerName)
 }
 
 function cellRender(clickedCell, clickedCellIndex) {
@@ -86,29 +105,42 @@ function resultValidation() {
 }
 
 function restartGame() {
-    gameActive = false;
+    gameActive = true;
     currentPlayer = "X";
     gameState = ["", "", "", "", "", "", "", "", ""];
-    gameStatus.innerHTML = currentPlayerTurn();
+    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
+    numClicks = 0;
+    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
+    document.querySelectorAll('input').forEach(input => input.value = "");
+    gameStatus.style.display = "none"
+}
+
+function replayGame() {
+    gameActive = true;
+    currentPlayer = "X";
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
     document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
     numClicks = 0;
+
 }
 
 function playerChange() {
-    if(numClicks % 2){
-        currentPlayer = "X"
-    } else {
+    if(numClicks % 2) {
         currentPlayer = "O"
+        playerName = document.querySelector(".player-two").value
+    } else {
+        playerName = document.querySelector(".player-one").value
+        currentPlayer = "X"
     }
     gameStatus.innerHTML = currentPlayerTurn()
 }
+
+
+
 //Event listeners for cells and restart button
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', cellClick));
 document.querySelector('.game-restart').addEventListener('click', restartGame);
 document.querySelector('.game-start').addEventListener('click', startGame);
-//Counting number of clicks to track player turn
-let numClicks = 0;
-document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', function() {
-    numClicks += 1;
-    console.log(numClicks)
-}));
+document.querySelector('.replay').addEventListener('click', replayGame);
+// document.querySelector('.game-start').addEventListener('click', storeNames)
