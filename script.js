@@ -45,11 +45,6 @@ function startGame() {
     gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
 }
 
-// function storeNames() {
-//     playerOne = document.querySelector('.player-one').value
-//     playerTwo = document.querySelector('.player-two').value
-// }
-
 function cellClick(clickedCellEvent) {
     //Assign cell index and clicked cell to variables for easier access
     const clickedCell = clickedCellEvent.target;
@@ -143,4 +138,3 @@ document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click'
 document.querySelector('.game-restart').addEventListener('click', restartGame);
 document.querySelector('.game-start').addEventListener('click', startGame);
 document.querySelector('.replay').addEventListener('click', replayGame);
-// document.querySelector('.game-start').addEventListener('click', storeNames)

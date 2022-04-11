@@ -7,38 +7,41 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body onload="loadFunction()">
     <section>
         <header>
         <h1 class="game-title">Tic Tac Toe</h1>
-        <h3>Enter names then click start when ready!</h3>
+        <h3>Enter names on the left, then click start when ready!</h3>
         </header>
         <button class="game-start">Start Game!</button>
+        <br>
         <section class="board">
+        <div class="player-names">
+            <input class="player-one" placeholder="Player One">
+            <input class="player-two" placeholder="Player Two">
+        </div>
         <div class="game-container">
-            <div data-cell-index=0 class="cell top left"></div>
-            <div data-cell-index=1 class="cell top"></div>
-            <div data-cell-index=2 class="cell top right"></div>
-            <div data-cell-index=3 class="cell left"></div>
+            <div data-cell-index=0 class="cell"></div>
+            <div data-cell-index=1 class="cell"></div>
+            <div data-cell-index=2 class="cell"></div>
+            <div data-cell-index=3 class="cell"></div>
             <div data-cell-index=4 class="cell"></div>
-            <div data-cell-index=5 class="cell right"></div>
-            <div data-cell-index=6 class="cell bottom left"></div>
-            <div data-cell-index=7 class="cell bottom"></div>
-            <div data-cell-index=8 class="cell bottom right"></div>
+            <div data-cell-index=5 class="cell"></div>
+            <div data-cell-index=6 class="cell"></div>
+            <div data-cell-index=7 class="cell"></div>
+            <div data-cell-index=8 class="cell"></div>
+        </div>
+        <div class="restart-buttons">
+            <button class="replay">Replay</button>
+            <button class="game-restart">Full Reset</button>
         </div>
         </section>
         <h2 class="game-status"></h2>
-        <section class="bottom-board">
-        <div class="player-names">
-        <input class="player-one" placeholder="Player One">
-        <input class="player-two" placeholder="Player Two">
-        </div>
-        <div class="restart-buttons">
-        <button class="replay">Replay</button>
-        <button class="game-restart">Reset Game & Names</button>
-        </div>
-        </section>
+        
     </section>
 <script src="script.js"></script>
 </body>
