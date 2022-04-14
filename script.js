@@ -1,7 +1,8 @@
 //Store game status element
-const gameStatus = document.querySelector('.game-status');
+const gameStatus = document.querySelector('.game-desc');
 
-//State variables
+//State vars
+
 let currentPlayer = "X";
 
 let numClicks = 0;
@@ -10,7 +11,15 @@ let gameState = ["", "", "", "", "", "", "", "", ""];
 
 let gameActive = false;
 
-let playerName = ""
+let playerName = "";
+
+let canRestart = false;
+
+let canStart = false;
+
+let canChangeGame = false;
+
+let checkOnePlayer = false;
 
 const winningConditions = [
     [0, 1, 2],
@@ -28,36 +37,131 @@ const winningMessage = () => `${playerName} is the winner!`;
 const drawMessage = `The game has ended in a draw.`;
 const currentPlayerTurn = () => `It's ${playerName}'s turn.`;
 
-//Display which players turn it is
-gameStatus.innerHTML = currentPlayerTurn();
+//Buttons and input variables
+const playerOneStart = document.querySelector('.game-start-one-player');
+const playerTwoStart = document.querySelector('.game-start-two-player');
+const singlePlayerBtn = document.querySelector('.single-player');
+const twoPlayerBtn = document.querySelector('.two-player')
+const playerOne = document.querySelector('.player-one');
+const playerTwo = document.querySelector('.player-two');
 
-//Functions for game
+//onLoad function
 function loadFunction() {
-    gameStatus.style.display = "none"
+    playerOneStart.style.display = 'none';
+    playerTwoStart.style.display = 'none';
+    playerOne.readOnly = true;
+    playerTwo.readOnly = true;
 }
 
-function startGame() {
+//functions for handling button clicks
+function singlePlayer() {
+    singlePlayerBtn.style.display = 'none'
+    twoPlayerBtn.style.display = 'none'
+    playerOneStart.style.display = 'inline'
+    playerTwo.value = 'Computer'
+    document.querySelector('.game-desc').innerHTML = 'Sorry this is not quite functional yet, try 2 player in the meantime!'
+    canStart = false;
+    canChangeGame = true;
+}
+
+function twoPlayer() {
+    playerOne.readOnly = false;
+    playerTwo.readOnly = false;
+    singlePlayerBtn.style.display = 'none';
+    twoPlayerBtn.style.display = 'none';
+    playerTwoStart.style.display = 'inline';
+    document.querySelector('.game-desc').innerHTML = 'Enter player names on left then press start!'
+    canStart = true;
+    canChangeGame = true;
+}
+
+function gameChange() {
+    if(canChangeGame === false) {
+        return;
+    } else
+    gameActive = false;
+    canRestart = false;
+    currentPlayer = "X";
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    gameStatus.innerHTML = 'Choose your gamemode'
+    numClicks = 0;
+    singlePlayerBtn.style.display = 'inline'
+    twoPlayerBtn.style.display = 'inline'
+    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
+    document.querySelectorAll('input').forEach(input => input.value = "");
+    loadFunction();
+}
+
+function replayGame() {
+    if(canRestart === false) {
+        return;
+    } else
+    gameActive = true;
+    canRestart = true;
+    currentPlayer = "X";
+    gameState = ["", "", "", "", "", "", "", "", ""];
+    gameStatus.innerHTML = `It's ${playerOne.value}'s turn.`;
+    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
+    numClicks = 0;
+
+}
+
+function startGameOnePlayer() {
+    // if(playerOne.value === '' || canStart === false) {
+    //     return;
+    // } else
+    // canStart = true;
+    // gameActive = ;
+    // numClicks = 0;
+    // checkOnePlayer = true;
+    // document.querySelector('.game-desc').innerHTML = 'Try to beat computer!'
+    playerOneStart.style.display = 'none';
+    playerTwo.value = '';
+    twoPlayer();
+
+}
+
+// function computerPlayer() {
+//     let random = Math.floor(Math.random() * 8)
+//     let computerCellChoice = gameState[random]
+//         if(computerCellChoice === '') {
+//             computerCellChoice = 'O'
+//         }
+// }
+
+//Functions for game
+
+function startGameTwoPlayer() {
+    if(playerOne.value === '' || playerTwo.value === '' || canStart === false) {
+        return;
+    } else
+    canStart = false;
     gameActive = true;
     numClicks = 0;
-    if(gameStatus.style.display === 'none') {
-        gameStatus.style.display = 'block'
-    }
-    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
+    canRestart = true;
+    gameStatus.innerHTML = `It's ${playerOne.value}'s turn.`;
 }
 
 function cellClick(clickedCellEvent) {
     //Assign cell index and clicked cell to variables for easier access
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = clickedCell.getAttribute('data-cell-index');
+    //Check game is active
+    if(gameActive !== true) {
+        return;
+    }
     //Check if cell has been clicked already
     if (gameState[clickedCellIndex] !== "" || gameActive == false) {
         return;
-    }
+    } else
+    //Track player change thru numClicks
     numClicks += 1;
     //Continue game
     cellRender(clickedCell, clickedCellIndex);
     resultValidation()
-    console.log(numClicks, playerName)
+    if(checkOnePlayer = true) {
+        computerPlayer()
+    }
 }
 
 function cellRender(clickedCell, clickedCellIndex) {
@@ -70,15 +174,12 @@ function resultValidation() {
     //Use a loop to go through all winning conditions
     for (let i = 0; i <= 7; i++) {
         const winCondition = winningConditions[i];
-        let a = gameState[winCondition[0]];
-        let b = gameState[winCondition[1]];
-        let c = gameState[winCondition[2]];
         //If cells are unfilled where checked, keep going
-        if (a === '' || b === '' || c === '') {
+        if (gameState[winCondition[0]] === '' || gameState[winCondition[1]] === '' || gameState[winCondition[2]] === '') {
             continue;
         }
         //If the data in the cells checked matches, winner!
-        if (a === b && b === c) {
+        if (gameState[winCondition[0]] === gameState[winCondition[1]] && gameState[winCondition[1]] === gameState[winCondition[2]]) {
             roundWon = true;
             break
         }
@@ -99,27 +200,6 @@ function resultValidation() {
     playerChange()
 }
 
-function restartGame() {
-    gameActive = true;
-    currentPlayer = "X";
-    gameState = ["", "", "", "", "", "", "", "", ""];
-    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
-    numClicks = 0;
-    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
-    document.querySelectorAll('input').forEach(input => input.value = "");
-    gameStatus.style.display = "none"
-}
-
-function replayGame() {
-    gameActive = true;
-    currentPlayer = "X";
-    gameState = ["", "", "", "", "", "", "", "", ""];
-    gameStatus.innerHTML = `It's ${document.querySelector('.player-one').value}'s turn.`;
-    document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = "");
-    numClicks = 0;
-
-}
-
 function playerChange() {
     if(numClicks % 2) {
         currentPlayer = "O"
@@ -135,6 +215,9 @@ function playerChange() {
 
 //Event listeners for cells and restart button
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', cellClick));
-document.querySelector('.game-restart').addEventListener('click', restartGame);
-document.querySelector('.game-start').addEventListener('click', startGame);
+document.querySelector('.game-change').addEventListener('click', gameChange);
+playerOneStart.addEventListener('click', startGameOnePlayer);
+playerTwoStart.addEventListener('click', startGameTwoPlayer);
 document.querySelector('.replay').addEventListener('click', replayGame);
+singlePlayerBtn.addEventListener('click', singlePlayer);
+twoPlayerBtn.addEventListener('click', twoPlayer);

@@ -14,34 +14,40 @@
 <body onload="loadFunction()">
     <section>
         <header>
-        <h1 class="game-title">Tic Tac Toe</h1>
-        <h3>Enter names on the left, then click start when ready!</h3>
+            <div class="player-names">
+                <input class="player-one placeholderClass players" placeholder="Player One">
+                <input class="player-two placeholderClass players" placeholder="Player Two">
+            </div>
+            <div class="game-info">
+                <h1 class="game-title">Tic Tac Toe</h1>
+                <h3 class="game-desc">Choose your gamemode</h3>
+            </div>
+            <div class="restart-buttons">
+                <button class="replay restart-style">Replay</button>
+                <button class="game-change restart-style">Change Gamemode</button>
+            </div>
         </header>
-        <button class="game-start">Start Game!</button>
+        <div class="game-option-btns">
+        <button class="single-player option-style">1 Player</button>
+        <button class="game-start-one-player option-style">Click here to try 2 player!</button>
+        <button class="game-start-two-player option-style">Start Game!</button>
+        <button class="two-player option-style">2 Player</button>
+        </div>
         <br>
         <section class="board">
-        <div class="player-names">
-            <input class="player-one" placeholder="Player One">
-            <input class="player-two" placeholder="Player Two">
-        </div>
-        <div class="game-container">
-            <div data-cell-index=0 class="cell"></div>
-            <div data-cell-index=1 class="cell"></div>
-            <div data-cell-index=2 class="cell"></div>
-            <div data-cell-index=3 class="cell"></div>
-            <div data-cell-index=4 class="cell"></div>
-            <div data-cell-index=5 class="cell"></div>
-            <div data-cell-index=6 class="cell"></div>
-            <div data-cell-index=7 class="cell"></div>
-            <div data-cell-index=8 class="cell"></div>
-        </div>
-        <div class="restart-buttons">
-            <button class="replay">Replay</button>
-            <button class="game-restart">Full Reset</button>
-        </div>
+            <div class="game-container">
+                <div data-cell-index=0 class="cell"></div>
+                <div data-cell-index=1 class="cell"></div>
+                <div data-cell-index=2 class="cell"></div>
+                <div data-cell-index=3 class="cell"></div>
+                <div data-cell-index=4 class="cell"></div>
+                <div data-cell-index=5 class="cell"></div>
+                <div data-cell-index=6 class="cell"></div>
+                <div data-cell-index=7 class="cell"></div>
+                <div data-cell-index=8 class="cell"></div>
+            </div>
         </section>
         <h2 class="game-status"></h2>
-        
     </section>
 <script src="script.js"></script>
 </body>
