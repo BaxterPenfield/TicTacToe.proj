@@ -19,7 +19,7 @@ let canStart = false;
 
 let canChangeGame = false;
 
-let checkOnePlayer = false;
+// let checkOnePlayer = false;
 
 const winningConditions = [
     [0, 1, 2],
